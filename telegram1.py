@@ -16,7 +16,8 @@ import time
 from time import sleep
 import datetime
 
-#from image import *
+from image import *
+from training import *
 from game import *
 
 # initialize the camera and grab a reference to the raw camera capture
@@ -112,6 +113,30 @@ def help(update: Update, context: CallbackContext):
 
 def train(update: Update, context: CallbackContext):
     update.message.reply_text("train selected")
+    update.message.reply_text("Put out ur secret hand gesture for data collection")
+    update.message.reply_text("3")
+    time.sleep(1)
+    update.message.reply_text("2")
+    time.sleep(1)
+    update.message.reply_text("1")
+    time.sleep(1)
+    update.message.reply_text("Hold hand gesture")
+    dataCollection(camera,'v')
+    update.message.reply_text("remove secret hand gesture for data collection")
+    update.message.reply_text("3")
+    time.sleep(1)
+    update.message.reply_text("2")
+    time.sleep(1)
+    update.message.reply_text("1")
+    time.sleep(1)
+    update.message.reply_text("Hold")
+    dataCollection(camera,'n')
+    update.message.reply_text("Done with data collection, starting model training")
+    modelTraining()
+    update.message.reply_text("Done with model training, security ready to start")
+    
+    
+    
 
 def unknown(update: Update, context: CallbackContext):
     update.message.reply_text("Sorry '%s' is not a valid command, input '/help' to find out the commands" % update.message.text)
