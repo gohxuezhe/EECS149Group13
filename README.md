@@ -14,10 +14,3 @@ sudo pip3 install https://github.com/lhelontra/tensorflow-on-arm/releases/downlo
 pip3 install sklearn #python library for machine learning
 pip3 install keras_squeezenet #squeezenet neural network model for computer vision, more feasible to deploy on hardware with limited memory
 
-step 1.1: get images using 'python3 image.py 100'
-step 1.2: press 'v' to select for user hand gesture before pressing 'a' to start, press 'n' to select background with no hand gesture isnide before pressing 'a'
-
-step 2: train model using 'python3 training.py'
-
-step 3: test it out using 'python3 game.py'
-
