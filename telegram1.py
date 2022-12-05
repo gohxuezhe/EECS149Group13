@@ -55,6 +55,7 @@ def startSecurity(update,context):
             frame2 = rawCapture2.array
             gray2 = cv2.cvtColor(frame2, cv2.COLOR_BGR2GRAY)
             gray2 = cv2.GaussianBlur(gray2, (21, 21), 0)
+            cv2.imwrite('photo_for_photo_function.jpg',frame2)
             
             #comparison between both frames to find difference
             deltaframe=cv2.absdiff(gray1,gray2) 
@@ -72,7 +73,6 @@ def startSecurity(update,context):
                 captureCheck=True;
             
             if captureCheck: #if found, alarm activated but havent ring
-                ledFunction()
                 cv2.imwrite('frame.jpg',frame2) #saving image
                 
                 for i in range(10): #10 chances to deactivate alarm before it rings
@@ -117,11 +117,18 @@ def end(update: Update, context: CallbackContext):
     global CONTINUE_CHECKER
     CONTINUE_CHECKER=False
     
+def photo(update: Update, context: CallbackContext):
+    context.bot.send_photo(chat_id=update.effective_chat.id,photo=open("photo_for_photo_function.jpg","rb"))
+    
 def help(update: Update, context: CallbackContext):
     update.message.reply_text("help selected")
     update.message.reply_text(
     '''
     -input '/start' to start security
+
+-input '/end' to stop security
+
+-input '/photo' to send a real time picture
     
 -input '/train' to start data collection and training
     '''
@@ -159,6 +166,7 @@ def unknown_text(update: Update, context: CallbackContext):
 
 updater.dispatcher.add_handler(CommandHandler('start', start,filters=None, allow_edited=None, pass_args=False, pass_update_queue=False, pass_job_queue=False, pass_user_data=False, pass_chat_data=False, run_async=True)) #run_async=True allowing multithreading so programme can still receive telegram inputs from users while running other programmes, needed for example to stop security
 updater.dispatcher.add_handler(CommandHandler('end', end))
+updater.dispatcher.add_handler(CommandHandler('photo', photo,filters=None, allow_edited=None, pass_args=False, pass_update_queue=False, pass_job_queue=False, pass_user_data=False, pass_chat_data=False, run_async=True))
 updater.dispatcher.add_handler(CommandHandler('train', train))
 updater.dispatcher.add_handler(CommandHandler('help', help))
 updater.dispatcher.add_handler(MessageHandler(Filters.text, unknown))
