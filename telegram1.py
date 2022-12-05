@@ -157,7 +157,7 @@ def unknown(update: Update, context: CallbackContext):
 def unknown_text(update: Update, context: CallbackContext):
     update.message.reply_text("Sorry I can't recognize you , you said '%s', input '/help' to find out the commands" % update.message.text)
 
-updater.dispatcher.add_handler(CommandHandler('start', start,filters=None, allow_edited=None, pass_args=False, pass_update_queue=False, pass_job_queue=False, pass_user_data=False, pass_chat_data=False, run_async=True))
+updater.dispatcher.add_handler(CommandHandler('start', start,filters=None, allow_edited=None, pass_args=False, pass_update_queue=False, pass_job_queue=False, pass_user_data=False, pass_chat_data=False, run_async=True)) #run_async=True allowing multithreading so programme can still receive telegram inputs from users while running other programmes, needed for example to stop security
 updater.dispatcher.add_handler(CommandHandler('end', end))
 updater.dispatcher.add_handler(CommandHandler('train', train))
 updater.dispatcher.add_handler(CommandHandler('help', help))
