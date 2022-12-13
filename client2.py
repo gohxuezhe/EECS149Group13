@@ -26,9 +26,9 @@ def on_message(client, userdata, message):
     msg=str(message.payload.decode("utf-8"))
     print("topic= "+message.topic)
     topics=(message.topic).split("/")
-    print("message received  "  +msg +" from " +topics[1])
-    if topics[0]==home_topic: #is it for me
-       reply_topic="base/" +home_topic+"/"+topics[1]
+    print("message received  "  +msg +" from " +topics[2])
+    if topics[1]==home_topic: #is it for me
+       reply_topic="base/" +home_topic+"/"+topics[2]
        client.publish("received your message")
        print("replied")
     
