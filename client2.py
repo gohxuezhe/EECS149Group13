@@ -1,6 +1,6 @@
 import paho.mqtt.client as mqtt
 import time,logging
-broker="192.168.1.68"
+broker="broker.hivemq.com"
 home_topic="client_b"
 port=1883
 QOS=0
