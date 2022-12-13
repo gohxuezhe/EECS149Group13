@@ -45,7 +45,7 @@ client.on_message=on_message
 client.connect(broker,port)           #establish connection
 time.sleep(1)
 client.loop_start()
-client.subscribe("house/#")
+client.subscribe("house/eecs149")
 count=1
 while True: #runs forever break with CTRL+C
 
