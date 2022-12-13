@@ -20,7 +20,7 @@ import datetime
 from image import *
 from training import *
 from game import *
-from alarm import *
+from alarm1 import *
 from LED import *
 
 # initialize the camera and grab a reference to the raw camera capture
