@@ -35,7 +35,7 @@ def on_message(client, userdata, message):
 def on_publish(client, userdata, mid):
     logging.info("message published "  +str(mid))
 
-send_topic ="house/client_a/" +home_topic
+send_topic ="eecs149/client_a/" +home_topic
 client= mqtt.Client("ClientB",False)       #create client object
 
 client.on_subscribe = on_subscribe   #assign function to callback
@@ -45,7 +45,7 @@ client.on_message=on_message
 client.connect(broker,port)           #establish connection
 time.sleep(1)
 client.loop_start()
-client.subscribe("house/eecs149group3")
+client.subscribe("eecs149/eecs149group3")
 count=1
 while True: #runs forever break with CTRL+C
 
