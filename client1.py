@@ -22,7 +22,7 @@ def on_message(client, userdata, msg):
     if image:
         f = open('receive1.jpg','wb')
     else:
-        f = open('receive2.jpq','wb')
+        f = open('receive2.jpg','wb')
     image = not image        
     f.write(msg.payload)
     f.close()
