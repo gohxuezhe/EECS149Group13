@@ -4,7 +4,6 @@ camera = PiCamera()
 import paho.mqtt.client as mqtt
 import paho.mqtt.publish as publish
 import time,logging
-import base64
 broker="broker.hivemq.com"
 home_topic="weiyu"
 port=1883
@@ -44,11 +43,7 @@ def on_message(client, userdata, message):
           #g=open('receivedimage.jpg','wb')
           #g.write(mybyteArray)
           #g.close()
-          #encoded = base64.b64encode(content)
-          f.close()
-          #client.publish(home_topic, encoded)
-          #publish.single(send_topic, mybyteArray, hostname=broker)
-          publish.single(home_topic,mybyteArray,hostname="mqtt.eclipseprojects.io")
+          publish.single(home_topic,mybyteArray)
           #2nd photo from 2nd pi
           #camera.capture("2nd_pi's_camera_picture.jpg")
           #f= open("2nd_pi's_camera_picture.jpg")
@@ -83,4 +78,3 @@ while True: #runs forever break with CTRL+C
 client.disconnect()
 
 client.loop_stop()
-
