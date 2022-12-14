@@ -42,7 +42,7 @@ def on_message(client, userdata, message):
           #g=open('receivedimage.jpg','wb')
           #g.write(mybyteArray)
           #g.close()
-          client.publish(mybyteArray)
+          client.publish(send_topic,mybyteArray)
           #2nd photo from 2nd pi
           #camera.capture("2nd_pi's_camera_picture.jpg")
           #f= open("2nd_pi's_camera_picture.jpg")
