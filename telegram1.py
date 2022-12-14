@@ -125,14 +125,14 @@ def high_alert():
             #rawCapture1 = PiRGBArray(camera, size=(640, 480)) # grab the raw NumPy array representing the first image
             #camera.capture(rawCapture1, format="bgr")
             #frame1 = rawCapture1.array
-            frame1 = cv2.imread("receive1.jpg",mode='RGB')
+            frame1 = cv2.imread("receive1.jpg")
             gray1 = cv2.cvtColor(frame1, cv2.COLOR_BGR2GRAY)
             gray1 = cv2.GaussianBlur(gray1, (21, 21), 0)
 
             #rawCapture2 = PiRGBArray(camera, size=(640, 480)) # grab the raw NumPy array representing the second image
             #camera.capture(rawCapture2, format="bgr")
             #frame2 = rawCapture2.array
-            frame2 = cv2.imread("receive2.jpg",mode='RGB')
+            frame2 = cv2.imread("receive2.jpg")
             gray2 = cv2.cvtColor(frame2, cv2.COLOR_BGR2GRAY)
             gray2 = cv2.GaussianBlur(gray2, (21, 21), 0)
             cv2.imwrite('photo_for_photo_function.jpg',frame2)
