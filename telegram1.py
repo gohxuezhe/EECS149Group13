@@ -105,7 +105,7 @@ def startSecurity(update,context):
                     time.sleep(0.5)
             elif pi1_intruder:
                 update.message.reply_text('High alert has began, checking both pi for intruder')
-                high_alert()
+                high_alert(update,context)
 
             key = cv2.waitKey(1) & 0xFF
 
