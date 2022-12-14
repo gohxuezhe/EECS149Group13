@@ -20,7 +20,7 @@ import datetime
 from image import *
 from training import *
 from game import *
-from alarm1 import *
+from alarm import *
 from LED import *
 
 from client1 import request_pi2
