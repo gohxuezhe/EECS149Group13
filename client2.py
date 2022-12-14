@@ -1,6 +1,7 @@
 from picamera import PiCamera
 camera = PiCamera()
 import paho.mqtt.client as mqtt
+import paho.mqtt.publish as publish
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
