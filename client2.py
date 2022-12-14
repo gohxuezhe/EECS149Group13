@@ -47,7 +47,7 @@ def on_message(client, userdata, message):
           #encoded = base64.b64encode(content)
           f.close()
           #client.publish(home_topic, encoded)
-          publish.single(send_topic, mybyteArray, hostname='m2m.eclipse.org')
+          publish.single(send_topic, mybyteArray, hostname=broker)
           #publish.single(home_topic,mybyteArray,hostname="mqtt.eclipseprojects.io")
           #2nd photo from 2nd pi
           #camera.capture("2nd_pi's_camera_picture.jpg")
