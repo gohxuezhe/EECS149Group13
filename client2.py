@@ -36,7 +36,7 @@ def on_message(client, userdata, message):
           #client.publish("received your message")
           #1st photo from 2nd pi
           camera.capture("2nd_pi's_camera_picture.jpg")
-          f= open("2nd_pi's_camera_picture.jpg")
+          f= open("2nd_pi's_camera_picture.jpg","rb")
           content = f.read()
           mybyteArray = bytearray(content)
           client.publish(topic, mybyteArray , 1)
