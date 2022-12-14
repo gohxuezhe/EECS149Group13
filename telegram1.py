@@ -105,6 +105,7 @@ def startSecurity(update,context):
                     time.sleep(0.5)
             elif pi1_intruder:
                 update.message.reply_text('High alert has began, checking both pi for intruder')
+                print('starting high alert')
                 high_alert(update,context)
 
             key = cv2.waitKey(1) & 0xFF
@@ -120,6 +121,7 @@ def startSecurity(update,context):
 def high_alert(update,context):
     while True:
             captureCheck=False
+            print('checking pi 2')
             request_pi2()
             captureCheck=False
             #rawCapture1 = PiRGBArray(camera, size=(640, 480)) # grab the raw NumPy array representing the first image
@@ -142,7 +144,7 @@ def high_alert(update,context):
             threshold = cv2.threshold(deltaframe, 25, 255, cv2.THRESH_BINARY)[1]
             threshold = cv2.dilate(threshold,None)
             countour,heirarchy = cv2.findContours(threshold, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-            print("no motion detected")
+            
             i=0
             for j in countour:
                 if cv2.contourArea(j) < 7000: #7000 can be changed to vary the sensitivity
@@ -154,9 +156,12 @@ def high_alert(update,context):
 
             if captureCheck: #if found, alarm activated but havent ring
                 cv2.imwrite('frame.jpg',frame2) #saving image
+                buzzFunction()
                 update.message.reply_text('The motion sensor for 2nd pi is triggered!')
+                print('The motion sensor for 2nd pi is triggered!')
                 context.bot.send_photo(chat_id=update.effective_chat.id,photo=open("frame.jpg","rb"))
             
+            print('checking pi 1')
             rawCapture1 = PiRGBArray(camera, size=(640, 480)) # grab the raw NumPy array representing the first image
             camera.capture(rawCapture1, format="bgr")
             frame1 = rawCapture1.array
@@ -175,7 +180,7 @@ def high_alert(update,context):
             threshold = cv2.threshold(deltaframe, 25, 255, cv2.THRESH_BINARY)[1]
             threshold = cv2.dilate(threshold,None)
             countour,heirarchy = cv2.findContours(threshold, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-            print("no motion detected")
+            
             i=0
             for j in countour:
                 if cv2.contourArea(j) < 7000: #7000 can be changed to vary the sensitivity
@@ -187,9 +192,11 @@ def high_alert(update,context):
             
             if captureCheck: #if found, alarm activated but havent ring
                 cv2.imwrite('frame.jpg',frame2) #saving image
+                buzzFunction()
                 update.message.reply_text('The motion sensor for 1st pi is triggered!')
+                print('The motion sensor for 1st pi is triggered!')
                 context.bot.send_photo(chat_id=update.effective_chat.id,photo=open("frame.jpg","rb"))
-    
+            
 updater = Updater("5721555744:AAGpA-DJt1kBkdO10KcZVX3KMvua2U2I8Nk",use_context=True)
 
 def start(update: Update, context: CallbackContext):
