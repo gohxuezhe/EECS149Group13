@@ -1,3 +1,6 @@
+from picamera import PiCamera
+camera = PiCamera()
+
 import paho.mqtt.client as mqtt
 import time,logging
 broker="broker.hivemq.com"
@@ -28,9 +31,23 @@ def on_message(client, userdata, message):
     topics=(message.topic).split("/")
     print("message received  "  +msg +" from " +topics[2])
     if topics[1]==home_topic: #is it for me
-       reply_topic="base/" +home_topic+"/"+topics[2]
-       client.publish("received your message")
-       print("replied")
+       if topics[2]=='xuezhe':
+          reply_topic="base/" +home_topic+"/"+topics[2]
+          #client.publish("received your message")
+          #1st photo from 2nd pi
+          camera.capture("2nd_pi's_camera_picture.jpg")
+          f= open("2nd_pi's_camera_picture.jpg")
+          content = f.read()
+          mybyteArray = bytearray(content)
+          client.publish(topic, mybyteArray , 1)
+          #2nd photo from 2nd pi
+          #camera.capture("2nd_pi's_camera_picture.jpg")
+          #f= open("2nd_pi's_camera_picture.jpg")
+          #content = f.read()
+          #mybyteArray = bytearray(content)
+          #client.publish(topic, mybyteArray , 1)
+          #####
+          print("replied with picture")
     
 def on_publish(client, userdata, mid):
     logging.info("message published "  +str(mid))
