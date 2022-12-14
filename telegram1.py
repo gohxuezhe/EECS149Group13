@@ -117,7 +117,7 @@ def startSecurity(update,context):
             if key == ord("q"):
                 break
 
-def high_alert():
+def high_alert(update,context):
     while True:
             captureCheck=False
             request_pi2()
