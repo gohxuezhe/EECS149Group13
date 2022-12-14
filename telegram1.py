@@ -23,6 +23,8 @@ from game import *
 from alarm1 import *
 from LED import *
 
+from client1 import request_pi2
+
 # initialize the camera and grab a reference to the raw camera capture
 camera = PiCamera()
 camera.resolution = (640, 480)
@@ -31,12 +33,19 @@ camera.framerate = 25
 # creating global variable for loop checker within startSecurity
 CONTINUE_CHECKER=True
 
+# chances to deactivate alarm before it rings
+deactivate = 5
+
+# Pi1 detected intruder
+pi1_intruder = False
+
 # main function called when '/start' is inputted
 def startSecurity(update,context):
     with keras.backend.get_session().graph.as_default(): #reset keras graph with every start
         model = load_model("game-model.h5")
         global chat_id #utilising global version
         global CONTINUE_CHECKER #utilising global version
+        global pi1_intruder #utilising global version
         captureCheck=False
         update.message.reply_text("Security ready!")
         
@@ -75,7 +84,7 @@ def startSecurity(update,context):
             if captureCheck: #if found, alarm activated but havent ring
                 cv2.imwrite('frame.jpg',frame2) #saving image
                 
-                for i in range(10): #10 chances to deactivate alarm before it rings
+                for i in range(deactivate): #10 chances to deactivate alarm before it rings
                     print("i is: ",i)
                     ledFunction()
                     test=gameFunction(camera,model)
@@ -87,12 +96,17 @@ def startSecurity(update,context):
                         break
                     elif test==False:
                         print("gameFunction not verified")
-                    if i==9: #no chances, intruder found
+                    if i==deactivate-1: # no more chances, intruder found
                         update.message.reply_text('The motion sensor is triggered!')
                         context.bot.send_photo(chat_id=update.effective_chat.id,photo=open("frame.jpg","rb"))
                         buzzFunction()
                         captureCheck=False;
+                        pi1_intruder=True
                     time.sleep(0.5)
+            elif pi1_intruder:
+                request_pi2()
+                pi1_intruder=False
+                
 
             key = cv2.waitKey(1) & 0xFF
 
@@ -100,7 +114,7 @@ def startSecurity(update,context):
             rawCapture1.truncate(0)
             rawCapture2.truncate(0)
 
-            # if the `q` key was pressed, break from the loop
+            # if the q key was pressed, break from the loop
             if key == ord("q"):
                 break
 
