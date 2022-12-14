@@ -160,6 +160,7 @@ def high_alert(update,context):
                 update.message.reply_text('The motion sensor for 2nd pi is triggered!')
                 print('The motion sensor for 2nd pi is triggered!')
                 context.bot.send_photo(chat_id=update.effective_chat.id,photo=open("frame.jpg","rb"))
+                captureCheck=False
             
             print('checking pi 1')
             rawCapture1 = PiRGBArray(camera, size=(640, 480)) # grab the raw NumPy array representing the first image
@@ -196,6 +197,7 @@ def high_alert(update,context):
                 update.message.reply_text('The motion sensor for 1st pi is triggered!')
                 print('The motion sensor for 1st pi is triggered!')
                 context.bot.send_photo(chat_id=update.effective_chat.id,photo=open("frame.jpg","rb"))
+                captureCheck=False
             
             
 updater = Updater("5721555744:AAGpA-DJt1kBkdO10KcZVX3KMvua2U2I8Nk",use_context=True)
