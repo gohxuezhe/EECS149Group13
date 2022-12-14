@@ -12,7 +12,7 @@ def on_message(client, userdata, msg):
   f = open('receive.jpg','w')
   f.write(msg.payload)
   f.close()
-  print 'image received'
+  print ('image received')
   
 client = mqtt.Client()
 client.on_connect = on_connect
