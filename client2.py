@@ -39,7 +39,7 @@ def on_message(client, userdata, message):
           f= open("2nd_pi's_camera_picture.jpg","rb")
           content = f.read()
           mybyteArray = bytearray(content)
-          g=open('receivedimage.jpg','w')
+          g=open('receivedimage.jpg','wb')
           g.write(mybyteArray)
           g.close()
           #client.publish(mybyteArray)
