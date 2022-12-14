@@ -84,7 +84,7 @@ def startSecurity(update,context):
             if captureCheck: #if found, alarm activated but havent ring
                 cv2.imwrite('frame.jpg',frame2) #saving image
                 
-                for i in range(deactivate): #10 chances to deactivate alarm before it rings
+                for i in range(deactivate): #chances to deactivate alarm before it rings
                     print("i is: ",i)
                     ledFunction()
                     test=gameFunction(camera,model)
@@ -97,16 +97,15 @@ def startSecurity(update,context):
                     elif test==False:
                         print("gameFunction not verified")
                     if i==deactivate-1: # no more chances, intruder found
-                        update.message.reply_text('The motion sensor is triggered!')
+                        update.message.reply_text('The motion sensor is triggered, high alert starting!')
                         context.bot.send_photo(chat_id=update.effective_chat.id,photo=open("frame.jpg","rb"))
                         buzzFunction()
                         captureCheck=False;
                         pi1_intruder=True
                     time.sleep(0.5)
             elif pi1_intruder:
-                request_pi2()
-                pi1_intruder=False
-                
+                update.message.reply_text('High alert has began, checking both pi for intruder')
+                high_alert()
 
             key = cv2.waitKey(1) & 0xFF
 
@@ -118,6 +117,79 @@ def startSecurity(update,context):
             if key == ord("q"):
                 break
 
+def high_alert():
+    while True:
+            captureCheck=False
+            request_pi2()
+            captureCheck=False
+            #rawCapture1 = PiRGBArray(camera, size=(640, 480)) # grab the raw NumPy array representing the first image
+            #camera.capture(rawCapture1, format="bgr")
+            #frame1 = rawCapture1.array
+            frame1 = cv2.imread("receive1.jpg",mode='RGB')
+            gray1 = cv2.cvtColor(frame1, cv2.COLOR_BGR2GRAY)
+            gray1 = cv2.GaussianBlur(gray1, (21, 21), 0)
+
+            #rawCapture2 = PiRGBArray(camera, size=(640, 480)) # grab the raw NumPy array representing the second image
+            #camera.capture(rawCapture2, format="bgr")
+            #frame2 = rawCapture2.array
+            frame2 = cv2.imread("receive2.jpg",mode='RGB')
+            gray2 = cv2.cvtColor(frame2, cv2.COLOR_BGR2GRAY)
+            gray2 = cv2.GaussianBlur(gray2, (21, 21), 0)
+            cv2.imwrite('photo_for_photo_function.jpg',frame2)
+
+            #comparison between both frames to find difference
+            deltaframe=cv2.absdiff(gray1,gray2) 
+            threshold = cv2.threshold(deltaframe, 25, 255, cv2.THRESH_BINARY)[1]
+            threshold = cv2.dilate(threshold,None)
+            countour,heirarchy = cv2.findContours(threshold, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+            print("no motion detected")
+            i=0
+            for j in countour:
+                if cv2.contourArea(j) < 7000: #7000 can be changed to vary the sensitivity
+                    continue #if difference not significant enough
+
+                (x, y, w, h) = cv2.boundingRect(j)
+                cv2.rectangle(frame2, (x, y), (x + w, y + h), (255, 0, 0), 2)
+                captureCheck=True;
+
+            if captureCheck: #if found, alarm activated but havent ring
+                cv2.imwrite('frame.jpg',frame2) #saving image
+                update.message.reply_text('The motion sensor for 2nd pi is triggered!')
+                context.bot.send_photo(chat_id=update.effective_chat.id,photo=open("frame.jpg","rb"))
+            
+            rawCapture1 = PiRGBArray(camera, size=(640, 480)) # grab the raw NumPy array representing the first image
+            camera.capture(rawCapture1, format="bgr")
+            frame1 = rawCapture1.array
+            gray1 = cv2.cvtColor(frame1, cv2.COLOR_BGR2GRAY)
+            gray1 = cv2.GaussianBlur(gray1, (21, 21), 0)
+
+            rawCapture2 = PiRGBArray(camera, size=(640, 480)) # grab the raw NumPy array representing the second image
+            camera.capture(rawCapture2, format="bgr")
+            frame2 = rawCapture2.array
+            gray2 = cv2.cvtColor(frame2, cv2.COLOR_BGR2GRAY)
+            gray2 = cv2.GaussianBlur(gray2, (21, 21), 0)
+            cv2.imwrite('photo_for_photo_function.jpg',frame2)
+            
+            #comparison between both frames to find difference
+            deltaframe=cv2.absdiff(gray1,gray2) 
+            threshold = cv2.threshold(deltaframe, 25, 255, cv2.THRESH_BINARY)[1]
+            threshold = cv2.dilate(threshold,None)
+            countour,heirarchy = cv2.findContours(threshold, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+            print("no motion detected")
+            i=0
+            for j in countour:
+                if cv2.contourArea(j) < 7000: #7000 can be changed to vary the sensitivity
+                    continue #if difference not significant enough
+
+                (x, y, w, h) = cv2.boundingRect(j)
+                cv2.rectangle(frame2, (x, y), (x + w, y + h), (255, 0, 0), 2)
+                captureCheck=True;
+            
+            if captureCheck: #if found, alarm activated but havent ring
+                cv2.imwrite('frame.jpg',frame2) #saving image
+                update.message.reply_text('The motion sensor for 1st pi is triggered!')
+                context.bot.send_photo(chat_id=update.effective_chat.id,photo=open("frame.jpg","rb"))
+    
 updater = Updater("5721555744:AAGpA-DJt1kBkdO10KcZVX3KMvua2U2I8Nk",use_context=True)
 
 def start(update: Update, context: CallbackContext):
