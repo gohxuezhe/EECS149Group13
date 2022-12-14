@@ -3,7 +3,7 @@ import RPi.GPIO as GPIO
 import time
 from time import sleep
 
-signalBUZZERpin = 4
+signalBUZZERpin = 12
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(signalBUZZERpin,GPIO.OUT,initial=GPIO.LOW)
 
