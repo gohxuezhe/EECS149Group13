@@ -5,7 +5,7 @@ import paho.mqtt.client as mqtt
 import paho.mqtt.publish as publish
 import time,logging
 import base64
-broker="broker.hivemq.com"
+broker="m2m.eclipse.org"
 home_topic="weiyu"
 port=1883
 QOS=0
@@ -47,7 +47,7 @@ def on_message(client, userdata, message):
           #encoded = base64.b64encode(content)
           f.close()
           #client.publish(home_topic, encoded)
-          publish.single(send_topic, mybyteArray, qos=1, hostname='m2m.eclipse.org')
+          publish.single(send_topic, mybyteArray, hostname='m2m.eclipse.org')
           #publish.single(home_topic,mybyteArray,hostname="mqtt.eclipseprojects.io")
           #2nd photo from 2nd pi
           #camera.capture("2nd_pi's_camera_picture.jpg")
