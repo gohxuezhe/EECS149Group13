@@ -3,7 +3,7 @@ import RPi.GPIO as GPIO
 import time
 from time import sleep
 
-def buzzFunction():
+def buzzFunction2():
     signalBUZZERpin = 12
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(signalBUZZERpin,GPIO.OUT)
