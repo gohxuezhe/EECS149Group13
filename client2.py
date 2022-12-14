@@ -5,7 +5,7 @@ import paho.mqtt.client as mqtt
 import paho.mqtt.publish as publish
 import time,logging
 import base64
-broker="m2m.eclipse.org"
+broker="broker.hivemq.com"
 home_topic="weiyu"
 port=1883
 QOS=0
