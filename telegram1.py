@@ -167,7 +167,7 @@ def high_alert(update,context):
             frame1 = rawCapture1.array
             gray1 = cv2.cvtColor(frame1, cv2.COLOR_BGR2GRAY)
             gray1 = cv2.GaussianBlur(gray1, (21, 21), 0)
-
+            time.sleep(1)
             rawCapture2 = PiRGBArray(camera, size=(640, 480)) # grab the raw NumPy array representing the second image
             camera.capture(rawCapture2, format="bgr")
             frame2 = rawCapture2.array
@@ -196,6 +196,7 @@ def high_alert(update,context):
                 update.message.reply_text('The motion sensor for 1st pi is triggered!')
                 print('The motion sensor for 1st pi is triggered!')
                 context.bot.send_photo(chat_id=update.effective_chat.id,photo=open("frame.jpg","rb"))
+            
             
 updater = Updater("5721555744:AAGpA-DJt1kBkdO10KcZVX3KMvua2U2I8Nk",use_context=True)
 
