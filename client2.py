@@ -43,7 +43,7 @@ def on_message(client, userdata, message):
           #g=open('receivedimage.jpg','wb')
           #g.write(mybyteArray)
           #g.close()
-          publish.single(home_topic,mybyteArray)
+          publish.single(home_topic,mybyteArray,hostname="mqtt.eclipseprojects.io")
           #2nd photo from 2nd pi
           #camera.capture("2nd_pi's_camera_picture.jpg")
           #f= open("2nd_pi's_camera_picture.jpg")
