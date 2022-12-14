@@ -21,6 +21,7 @@ from image import *
 from training import *
 from game import *
 from alarm1 import *
+from alarm2 import *
 from LED import *
 
 from client1 import request_pi2
@@ -99,7 +100,7 @@ def startSecurity(update,context):
                     if i==deactivate-1: # no more chances, intruder found
                         update.message.reply_text('The motion sensor is triggered, high alert starting!')
                         context.bot.send_photo(chat_id=update.effective_chat.id,photo=open("frame.jpg","rb"))
-                        buzzFunction()
+                        buzzFunction1()
                         captureCheck=False;
                         pi1_intruder=True
                     time.sleep(0.5)
@@ -156,7 +157,7 @@ def high_alert(update,context):
 
             if captureCheck: #if found, alarm activated but havent ring
                 cv2.imwrite('frame.jpg',frame2) #saving image
-                buzzFunction()
+                buzzFunction2()
                 update.message.reply_text('The motion sensor for 2nd pi is triggered!')
                 print('The motion sensor for 2nd pi is triggered!')
                 context.bot.send_photo(chat_id=update.effective_chat.id,photo=open("frame.jpg","rb"))
@@ -192,7 +193,7 @@ def high_alert(update,context):
             
             if captureCheck: #if found, alarm activated but havent ring
                 cv2.imwrite('frame.jpg',frame2) #saving image
-                buzzFunction()
+                buzzFunction1()
                 update.message.reply_text('The motion sensor for 1st pi is triggered!')
                 print('The motion sensor for 1st pi is triggered!')
                 context.bot.send_photo(chat_id=update.effective_chat.id,photo=open("frame.jpg","rb"))
