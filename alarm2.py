@@ -4,7 +4,7 @@ import time
 from time import sleep
 
 def buzzFunction2():
-    signalBUZZERpin = 12
+    signalBUZZERpin = 4
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(signalBUZZERpin,GPIO.OUT)
     buzzer = GPIO.PWM(signalBUZZERpin, 1000) # Set frequency to 1 Khz
