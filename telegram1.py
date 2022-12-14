@@ -21,7 +21,6 @@ from image import *
 from training import *
 from game import *
 from alarm1 import *
-from alarm2 import *
 from LED import *
 
 from client1 import request_pi2
@@ -157,7 +156,7 @@ def high_alert(update,context):
 
             if captureCheck: #if found, alarm activated but havent ring
                 cv2.imwrite('frame.jpg',frame2) #saving image
-                buzzFunction2()
+                buzzFunction1()
                 update.message.reply_text('The motion sensor for 2nd pi is triggered!')
                 print('The motion sensor for 2nd pi is triggered!')
                 context.bot.send_photo(chat_id=update.effective_chat.id,photo=open("frame.jpg","rb"))
